@@ -1,14 +1,32 @@
 package com.wallet.finances.entities;
 
-public class User {
+import java.io.Serializable;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class User implements Serializable{
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(unique = true, name = "username")
     private String username;
 
+    @Column(unique = true, name = "email")
     private String email;
 
+    @Column(name = "password")
     private String password;
 
     public User() {
