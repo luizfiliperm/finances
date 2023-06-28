@@ -1,44 +1,48 @@
 package com.wallet.finances.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.wallet.finances.dao.UserDAO;
+import com.wallet.finances.dao.UserRepository;
 import com.wallet.finances.entities.User;
 import com.wallet.finances.services.UserService;
 
-import jakarta.transaction.Transactional;
 
 @Service
 public class UserSericeImpl implements UserService{
 
-    private UserDAO userDAO;
+    private UserRepository userRepository;
 
-    public UserSericeImpl(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserSericeImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public List<User> findAll() {
-        return userDAO.findAll();
+        return userRepository.findAll();
     }
 
     @Override
     public User findById(Long id) {
-        return userDAO.findById(id);
+        Optional<User> user = userRepository.findById(id);
+
+        if(!user.isPresent()){
+            throw new RuntimeException("User not found");
+        }
+
+        return user.get();
     }
 
-    @Transactional
     @Override
     public User save(User user) {
-        return userDAO.save(user);
+        return userRepository.save(user);
     }
 
-    @Transactional
     @Override
     public void deleteById(Long id) {
-        userDAO.deleteById(id);
+        userRepository.deleteById(id);
     }
     
 }
