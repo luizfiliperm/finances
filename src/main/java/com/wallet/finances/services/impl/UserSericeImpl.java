@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.wallet.finances.dao.UserRepository;
 import com.wallet.finances.entities.User;
+import com.wallet.finances.exceptions.user.UserAlreadyExistsException;
 import com.wallet.finances.exceptions.user.UserNotFoundException;
 import com.wallet.finances.services.UserService;
 
@@ -38,6 +39,18 @@ public class UserSericeImpl implements UserService{
 
     @Override
     public User save(User user) {
+        boolean isCreating = user.getId() == 0L;
+
+        if(isCreating){
+            if(userRepository.existsByEmail(user.getEmail())){
+                throw new UserAlreadyExistsException("Already exists a user with this email!");
+            }
+
+            if(userRepository.existsByUsername(user.getUsername())){
+                throw new UserAlreadyExistsException("Already exists a user with this username!");
+            }
+        }
+
         return userRepository.save(user);
     }
 

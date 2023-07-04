@@ -12,7 +12,7 @@ import com.wallet.finances.exceptions.ErrorMessage;
 import jakarta.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-public class UserNotFoundExceptionHandler {
+public class UserExceptionHandler {
     
     @ExceptionHandler
     ResponseEntity<ErrorMessage> handleExcpetion(UserNotFoundException exception){
@@ -28,4 +28,17 @@ public class UserNotFoundExceptionHandler {
         return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler
+    ResponseEntity<ErrorMessage> handleExcpetion(UserAlreadyExistsException exception){
+        ErrorMessage errorMessage = new ErrorMessage();
+
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        
+        errorMessage.setMessage(exception.getMessage());
+        errorMessage.setStatus(HttpStatus.CONFLICT.value());
+        errorMessage.setTimestamp(System.currentTimeMillis());
+        errorMessage.setPath(request.getRequestURI());
+
+        return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.CONFLICT);
+    }
 }
