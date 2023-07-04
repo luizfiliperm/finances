@@ -34,10 +34,6 @@ public class UserRestController {
     public User getUser(@PathVariable Long userId) {
         User user = userService.findById(userId);
 
-        if (user == null) {
-            throw new RuntimeException("User id not found - " + userId);
-        }
-
         return user;
     }
 

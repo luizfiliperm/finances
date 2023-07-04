@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.wallet.finances.dao.UserRepository;
 import com.wallet.finances.entities.User;
+import com.wallet.finances.exceptions.user.UserNotFoundException;
 import com.wallet.finances.services.UserService;
 
 
@@ -29,7 +30,7 @@ public class UserSericeImpl implements UserService{
         Optional<User> user = userRepository.findById(id);
 
         if(!user.isPresent()){
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException("User with id: " + id + " not found");
         }
 
         return user.get();
