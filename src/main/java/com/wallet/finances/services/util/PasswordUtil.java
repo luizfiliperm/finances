@@ -2,6 +2,8 @@ package com.wallet.finances.services.util;
 
 import com.wallet.finances.entities.User;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
 public class PasswordUtil {
     
     private static final int MIN_LENGHT = 8;
@@ -30,7 +32,9 @@ public class PasswordUtil {
         return true;
     }
 
-    // public static String hashPassword(String password);
+    public static String hashPassword(String password){
+        return BCrypt.withDefaults().hashToString(12, password.toCharArray());
+    }
 
     // public static Boolean comparePassword(String password, String comparePassword);
 

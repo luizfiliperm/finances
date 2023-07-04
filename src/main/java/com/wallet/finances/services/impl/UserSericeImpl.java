@@ -54,6 +54,8 @@ public class UserSericeImpl implements UserService{
             if(!PasswordUtil.validatePassword(user)){
                 throw new InvalidPasswordException("Invalid Password");
             }
+
+            user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
         }
 
         return userRepository.save(user);
