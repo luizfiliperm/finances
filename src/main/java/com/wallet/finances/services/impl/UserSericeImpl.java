@@ -7,10 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.wallet.finances.dao.UserRepository;
 import com.wallet.finances.entities.User;
+import com.wallet.finances.exceptions.password.InvalidPasswordException;
 import com.wallet.finances.exceptions.user.UserAlreadyExistsException;
 import com.wallet.finances.exceptions.user.UserNotFoundException;
 import com.wallet.finances.services.UserService;
-
+import com.wallet.finances.services.util.PasswordUtil;
 
 @Service
 public class UserSericeImpl implements UserService{
@@ -48,6 +49,10 @@ public class UserSericeImpl implements UserService{
 
             if(userRepository.existsByUsername(user.getUsername())){
                 throw new UserAlreadyExistsException("Already exists a user with this username!");
+            }
+
+            if(!PasswordUtil.validatePassword(user)){
+                throw new InvalidPasswordException("Invalid Password");
             }
         }
 
