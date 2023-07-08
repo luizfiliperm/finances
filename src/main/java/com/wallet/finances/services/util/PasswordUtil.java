@@ -1,6 +1,6 @@
 package com.wallet.finances.services.util;
 
-import com.wallet.finances.entities.User;
+import com.wallet.finances.entities.user.User;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 

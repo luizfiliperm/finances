@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.wallet.finances.repositories.UserRepository;
-import com.wallet.finances.entities.User;
+import com.wallet.finances.entities.user.User;
 import com.wallet.finances.exceptions.password.InvalidPasswordException;
 import com.wallet.finances.exceptions.user.UserAlreadyExistsException;
 import com.wallet.finances.exceptions.user.UserNotFoundException;

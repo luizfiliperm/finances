@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wallet.finances.entities.User;
+import com.wallet.finances.entities.user.User;
 import com.wallet.finances.services.UserService;
 
 @RestController

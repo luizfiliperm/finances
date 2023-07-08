@@ -2,7 +2,7 @@ package com.wallet.finances.services;
 
 import java.util.List;
 
-import com.wallet.finances.entities.User;
+import com.wallet.finances.entities.user.User;
 
 public interface UserService {
     List<User> findAll();
