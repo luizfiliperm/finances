@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.wallet.finances.dao.UserRepository;
+import com.wallet.finances.repositories.UserRepository;
 import com.wallet.finances.entities.User;
 import com.wallet.finances.exceptions.password.InvalidPasswordException;
 import com.wallet.finances.exceptions.user.UserAlreadyExistsException;
@@ -14,11 +14,11 @@ import com.wallet.finances.services.UserService;
 import com.wallet.finances.services.util.PasswordUtil;
 
 @Service
-public class UserSericeImpl implements UserService{
+public class UserServiceImpl implements UserService{
 
     private UserRepository userRepository;
 
-    public UserSericeImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
