@@ -3,6 +3,9 @@ package com.wallet.finances.services.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import com.wallet.finances.repositories.UserRepository;
@@ -10,17 +13,21 @@ import com.wallet.finances.entities.user.User;
 import com.wallet.finances.exceptions.password.InvalidPasswordException;
 import com.wallet.finances.exceptions.user.UserAlreadyExistsException;
 import com.wallet.finances.exceptions.user.UserNotFoundException;
+import com.wallet.finances.infra.security.TokenService;
 import com.wallet.finances.services.UserService;
 import com.wallet.finances.services.util.PasswordUtil;
 
 @Service
 public class UserServiceImpl implements UserService{
 
+    @Autowired
     private UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private TokenService tokenService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Override
     public List<User> findAll() {
@@ -39,8 +46,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User save(User user) {
-        boolean isCreating = user.getId() == 0L;
+    public String authenticate(User user) {
+        boolean isCreating = (user.getId() == 0L);
 
         if(isCreating){
             if(userRepository.existsByEmail(user.getEmail())){
@@ -56,14 +63,27 @@ public class UserServiceImpl implements UserService{
             }
 
             user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
+        }else{
+            
         }
-
-        return userRepository.save(user);
+        
+        userRepository.save(user);
+        return generateToken(user.getUsername(), user.getPassword());
     }
 
     @Override
     public void deleteById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    private String generateToken(String username, String password){
+        var usernamePassword = new UsernamePasswordAuthenticationToken(username, password);
+
+        var auth = authenticationManager.authenticate(usernamePassword);
+
+        String token = tokenService.genToken((User) auth.getPrincipal());
+
+        return token;
     }
     
     

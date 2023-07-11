@@ -9,7 +9,7 @@ public interface UserService {
     
     User findById(Long id);
 
-    User save(User user);
+    String authenticate(User user);
 
     void deleteById(Long id);
 }

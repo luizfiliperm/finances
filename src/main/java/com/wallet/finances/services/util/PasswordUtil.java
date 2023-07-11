@@ -1,8 +1,9 @@
 package com.wallet.finances.services.util;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import com.wallet.finances.entities.user.User;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public class PasswordUtil {
     
@@ -33,7 +34,7 @@ public class PasswordUtil {
     }
 
     public static String hashPassword(String password){
-        return BCrypt.withDefaults().hashToString(12, password.toCharArray());
+        return new BCryptPasswordEncoder().encode(password);
     }
 
     // public static Boolean comparePassword(String password, String comparePassword);

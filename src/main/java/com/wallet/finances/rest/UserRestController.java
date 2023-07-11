@@ -18,48 +18,48 @@ import com.wallet.finances.services.UserService;
 @RequestMapping("/api")
 public class UserRestController {
     
-    private UserService userService;
+    // private UserService userService;
 
-    public UserRestController(UserService userService) {
-        this.userService = userService;
-    }
+    // public UserRestController(UserService userService) {
+    //     this.userService = userService;
+    // }
 
-    @GetMapping("/users")
-    public List<User> findAll() {
+    // @GetMapping("/users")
+    // public List<User> findAll() {
 
-        return userService.findAll();
-    }
+    //     return userService.findAll();
+    // }
 
-    @GetMapping("/users/{userId}")
-    public User getUser(@PathVariable Long userId) {
-        User user = userService.findById(userId);
+    // @GetMapping("/users/{userId}")
+    // public User getUser(@PathVariable Long userId) {
+    //     User user = userService.findById(userId);
 
-        return user;
-    }
+    //     return user;
+    // }
 
-    @PostMapping("/users")
-    public User addUser(@RequestBody User user) {
-        user.setId(0L);
+    // @PostMapping("/users")
+    // public User addUser(@RequestBody User user) {
+    //     user.setId(0L);
 
-        return userService.save(user);
-    }
+    //     return userService.save(user);
+    // }
 
-    @PutMapping("/users")
-    public User updateUser(@RequestBody User user) {
-        return userService.save(user);
-    }
+    // @PutMapping("/users")
+    // public User updateUser(@RequestBody User user) {
+    //     return userService.save(user);
+    // }
 
-    @DeleteMapping("/users/{userId}")
-    public String deleteUser(@PathVariable Long userId) {
+    // @DeleteMapping("/users/{userId}")
+    // public String deleteUser(@PathVariable Long userId) {
 
-        User user = userService.findById(userId);
+    //     User user = userService.findById(userId);
 
-        if (user == null) {
-            throw new RuntimeException("User id not found - " + userId);
-        }
+    //     if (user == null) {
+    //         throw new RuntimeException("User id not found - " + userId);
+    //     }
 
-        userService.deleteById(userId);
+    //     userService.deleteById(userId);
         
-        return "Deleted user id - " + userId;
-    }
+    //     return "Deleted user id - " + userId;
+    // }
 }
