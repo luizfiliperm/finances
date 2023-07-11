@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.wallet.finances.repositories.UserRepository;
 import com.wallet.finances.entities.user.User;
 import com.wallet.finances.exceptions.user.UserAlreadyExistsException;
+import com.wallet.finances.exceptions.user.UserAuthenticationException;
 import com.wallet.finances.exceptions.user.UserNotFoundException;
 import com.wallet.finances.infra.security.TokenService;
 import com.wallet.finances.services.UserService;
@@ -76,15 +78,15 @@ public class UserServiceImpl implements UserService{
     }
 
     private User authUser(String login, String password){
-        try{
+        try {
             var usernamePassword = new UsernamePasswordAuthenticationToken(login, password);
             var auth = authenticationManager.authenticate(usernamePassword);
             return (User) auth.getPrincipal();
-        }catch(InternalAuthenticationServiceException exception){
-
-            String badCredential = (login.contains("@")) ? "Email" : "Username";
-            throw new UserNotFoundException(badCredential + " not found!");
+            
+        } catch (BadCredentialsException | InternalAuthenticationServiceException exception) {
+            throw new UserAuthenticationException("Bad credentials!");
         }
+        
 
     }
 
