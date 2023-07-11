@@ -9,7 +9,10 @@ public interface UserService {
     
     User findById(Long id);
 
-    String authenticate(User user);
+    String register(User user);
 
     void deleteById(Long id);
+
+    String login(String login, String password);
+
 }
