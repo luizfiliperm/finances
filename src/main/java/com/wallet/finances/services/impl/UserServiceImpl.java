@@ -14,7 +14,7 @@ import com.wallet.finances.exceptions.user.UserAlreadyExistsException;
 import com.wallet.finances.exceptions.user.UserNotFoundException;
 import com.wallet.finances.infra.security.TokenService;
 import com.wallet.finances.services.UserService;
-import com.wallet.finances.services.util.PasswordUtil;
+import com.wallet.finances.services.util.UserUtil;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -54,9 +54,10 @@ public class UserServiceImpl implements UserService{
             throw new UserAlreadyExistsException("Already exists a user with this username!");
         }
 
-        PasswordUtil.validatePassword(user);
+        UserUtil.validateUserName(user.getUsername());
+        UserUtil.validatePassword(user);
 
-        user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
+        user.setPassword(UserUtil.hashPassword(user.getPassword()));
         userRepository.save(user);
         
         return generateToken(user);

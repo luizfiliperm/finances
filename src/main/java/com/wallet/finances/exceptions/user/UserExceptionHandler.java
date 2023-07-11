@@ -41,4 +41,19 @@ public class UserExceptionHandler {
 
         return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler
+    ResponseEntity<ErrorMessage> handleException(InvalidDataException exception){
+
+        ErrorMessage errorMessage = new ErrorMessage();
+
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        
+        errorMessage.setMessage(exception.getMessage());
+        errorMessage.setStatus(HttpStatus.BAD_REQUEST.value());
+        errorMessage.setTimestamp(System.currentTimeMillis());
+        errorMessage.setPath(request.getRequestURI());
+
+        return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
 }
