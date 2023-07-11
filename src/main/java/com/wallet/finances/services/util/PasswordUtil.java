@@ -3,6 +3,7 @@ package com.wallet.finances.services.util;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.wallet.finances.entities.user.User;
+import com.wallet.finances.exceptions.password.InvalidPasswordException;
 
 
 public class PasswordUtil {
@@ -11,23 +12,27 @@ public class PasswordUtil {
 
     public static Boolean validatePassword(User user){
         if(!hasMinLenght(user.getPassword())){
-            return false;
+            throw new InvalidPasswordException("The password must contains at least 8 digits!");
         }
 
         if(!hasLowerCaseCharacter(user.getPassword())){
-            return false;
+            throw new InvalidPasswordException("The password must contains at least 1 lowercase letter!");
         }
 
         if(!hasUpperCaseCharacter(user.getPassword())){
-            return false;
+            throw new InvalidPasswordException("The password must contains at least 1 uppercase letter!");
+        }
+
+        if(!hasNumber(user.getPassword())){
+            throw new InvalidPasswordException("The password must contains at least 1 number!");
         }
 
         if(!hasSpecialCharacter(user.getPassword())){
-            return false;
+            throw new InvalidPasswordException("The password must contains at least 1 special character!");
         }
 
         if(hasPersonalInformation(user)){
-            return false;
+            throw new InvalidPasswordException("The password must not contain personal information!");
         }
 
         return true;
@@ -37,7 +42,6 @@ public class PasswordUtil {
         return new BCryptPasswordEncoder().encode(password);
     }
 
-    // public static Boolean comparePassword(String password, String comparePassword);
 
 
     private static Boolean hasMinLenght(String password){
@@ -54,6 +58,10 @@ public class PasswordUtil {
 
     private static Boolean hasSpecialCharacter(String password){
         return password.matches(".*[^a-zA-Z0-9].*");
+    }
+
+    private static Boolean hasNumber(String password) {
+        return password.matches(".*\\d.*");
     }
 
     private static Boolean hasPersonalInformation(User user){

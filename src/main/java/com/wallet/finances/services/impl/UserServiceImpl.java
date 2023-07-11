@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.wallet.finances.repositories.UserRepository;
 import com.wallet.finances.entities.user.User;
-import com.wallet.finances.exceptions.password.InvalidPasswordException;
 import com.wallet.finances.exceptions.user.UserAlreadyExistsException;
 import com.wallet.finances.exceptions.user.UserNotFoundException;
 import com.wallet.finances.infra.security.TokenService;
@@ -55,9 +54,7 @@ public class UserServiceImpl implements UserService{
             throw new UserAlreadyExistsException("Already exists a user with this username!");
         }
 
-        if(!PasswordUtil.validatePassword(user)){
-            throw new InvalidPasswordException("Invalid Password");
-        }
+        PasswordUtil.validatePassword(user);
 
         user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
         userRepository.save(user);
