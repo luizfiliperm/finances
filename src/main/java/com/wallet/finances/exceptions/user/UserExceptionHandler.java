@@ -2,6 +2,7 @@ package com.wallet.finances.exceptions.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -26,6 +27,20 @@ public class UserExceptionHandler {
         errorMessage.setPath(request.getRequestURI());
 
         return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    ResponseEntity<ErrorMessage> handleExcpetion(BadCredentialsException exception){
+        ErrorMessage errorMessage = new ErrorMessage();
+
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        
+        errorMessage.setMessage("Incorrect Password!");
+        errorMessage.setStatus(HttpStatus.FORBIDDEN.value());
+        errorMessage.setTimestamp(System.currentTimeMillis());
+        errorMessage.setPath(request.getRequestURI());
+
+        return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
@@ -75,10 +76,16 @@ public class UserServiceImpl implements UserService{
     }
 
     private User authUser(String login, String password){
-        var usernamePassword = new UsernamePasswordAuthenticationToken(login, password);
-        var auth = authenticationManager.authenticate(usernamePassword);
+        try{
+            var usernamePassword = new UsernamePasswordAuthenticationToken(login, password);
+            var auth = authenticationManager.authenticate(usernamePassword);
+            return (User) auth.getPrincipal();
+        }catch(InternalAuthenticationServiceException exception){
 
-        return (User) auth.getPrincipal();
+            String badCredential = (login.contains("@")) ? "Email" : "Username";
+            throw new UserNotFoundException(badCredential + " not found!");
+        }
+
     }
 
     private String generateToken(User user){

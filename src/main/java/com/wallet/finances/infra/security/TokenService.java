@@ -31,7 +31,6 @@ public class TokenService {
                            .sign(algorithm);
             return token;
         }catch(JWTCreationException exception){
-            exception.printStackTrace();
             throw new RuntimeException("Error while generating token!");
         }
     }
@@ -47,7 +46,6 @@ public class TokenService {
                .getSubject();
 
         } catch (JWTVerificationException exception) {
-            exception.printStackTrace();
             return "";
         }
        
