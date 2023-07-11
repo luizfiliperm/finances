@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 import com.wallet.finances.repositories.UserRepository;
@@ -63,7 +62,7 @@ public class UserServiceImpl implements UserService{
         user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
         userRepository.save(user);
         
-        return generateToken(user.getUsername(), user.getPassword());
+        return generateToken(user);
     }
 
     @Override
@@ -74,22 +73,19 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String login(String login, String password) {
-        return generateToken(login, password);
+        return generateToken(authUser(login, password));
     }
 
-    private String generateToken(String username, String password){
-        try{
-            var usernamePassword = new UsernamePasswordAuthenticationToken(username, password);
-            var auth = authenticationManager.authenticate(usernamePassword);
-            String token = tokenService.genToken((User) auth.getPrincipal());
-            return token;
-        }catch(AuthenticationException e){
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
+    private User authUser(String login, String password){
+        var usernamePassword = new UsernamePasswordAuthenticationToken(login, password);
+        var auth = authenticationManager.authenticate(usernamePassword);
 
-        
+        return (User) auth.getPrincipal();
+    }
 
+    private String generateToken(User user){
+        String token = tokenService.genToken(user);
+        return token;
     }
 
     
