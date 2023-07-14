@@ -1,9 +1,7 @@
 package com.wallet.finances.rest;
 
-import com.wallet.finances.dao.CategoryRepository;
 import com.wallet.finances.entities.Category;
 import com.wallet.finances.services.CategoryService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

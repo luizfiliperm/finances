@@ -1,4 +1,4 @@
-package com.wallet.finances.dao;
+package com.wallet.finances.repositories;
 
 import com.wallet.finances.entities.Category;
 import org.springframework.data.jpa.repository.JpaRepository;

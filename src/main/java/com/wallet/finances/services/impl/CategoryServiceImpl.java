@@ -1,6 +1,6 @@
 package com.wallet.finances.services.impl;
 
-import com.wallet.finances.dao.CategoryRepository;
+import com.wallet.finances.repositories.CategoryRepository;
 import com.wallet.finances.entities.Category;
 import com.wallet.finances.services.CategoryService;
 import org.springframework.stereotype.Service;
@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryImpl implements CategoryService {
+public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
-    public CategoryImpl(CategoryRepository categoryRepository){
+    public CategoryServiceImpl(CategoryRepository categoryRepository){
         this.categoryRepository = categoryRepository;
     }
 

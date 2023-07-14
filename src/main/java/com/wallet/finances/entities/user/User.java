@@ -1,15 +1,19 @@
-package com.wallet.finances.entities;
+package com.wallet.finances.entities.user;
 
-import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class User implements Serializable{
+public class User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
     
@@ -30,14 +34,19 @@ public class User implements Serializable{
     @Column(name = "password")
     private String password;
 
+    @Column
+    private UserRole role;
+
     public User() {
     }
 
-    public User(String name, String username, String email, String password) {
+    public User(Long id, String name, String username, String email, String password, UserRole role) {
+        this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     public Long getId() {
@@ -60,6 +69,7 @@ public class User implements Serializable{
         return username;
     }
 
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -78,6 +88,14 @@ public class User implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     @Override
@@ -105,6 +123,30 @@ public class User implements Serializable{
         return true;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER") );
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
     
 
 }

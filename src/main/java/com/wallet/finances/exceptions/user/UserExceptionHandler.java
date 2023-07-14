@@ -29,6 +29,20 @@ public class UserExceptionHandler {
     }
 
     @ExceptionHandler
+    ResponseEntity<ErrorMessage> handleExcpetion(UserAuthenticationException exception){
+        ErrorMessage errorMessage = new ErrorMessage();
+
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        
+        errorMessage.setMessage(exception.getMessage());
+        errorMessage.setStatus(HttpStatus.FORBIDDEN.value());
+        errorMessage.setTimestamp(System.currentTimeMillis());
+        errorMessage.setPath(request.getRequestURI());
+
+        return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler
     ResponseEntity<ErrorMessage> handleExcpetion(UserAlreadyExistsException exception){
         ErrorMessage errorMessage = new ErrorMessage();
 
@@ -40,5 +54,20 @@ public class UserExceptionHandler {
         errorMessage.setPath(request.getRequestURI());
 
         return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler
+    ResponseEntity<ErrorMessage> handleException(InvalidDataException exception){
+
+        ErrorMessage errorMessage = new ErrorMessage();
+
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        
+        errorMessage.setMessage(exception.getMessage());
+        errorMessage.setStatus(HttpStatus.BAD_REQUEST.value());
+        errorMessage.setTimestamp(System.currentTimeMillis());
+        errorMessage.setPath(request.getRequestURI());
+
+        return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 }
