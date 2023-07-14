@@ -3,14 +3,19 @@ package com.wallet.finances.entities.user;
 import java.util.Collection;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.wallet.finances.entities.wallet.Wallet;
 
 @Entity
 public class User implements UserDetails {
@@ -36,6 +41,9 @@ public class User implements UserDetails {
 
     @Column
     private UserRole role;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Wallet wallet;
 
     public User() {
     }
@@ -98,6 +106,15 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+    public Wallet getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(Wallet wallet) {
+        this.wallet = wallet;
+    }
+    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -147,6 +164,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+    
     
 
 }
