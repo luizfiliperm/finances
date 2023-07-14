@@ -1,6 +1,6 @@
 package com.wallet.finances.entities.transactions;
 
-import com.wallet.finances.Enum.IncomeType;
+import com.wallet.finances.entities.transactions.enums.IncomeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 

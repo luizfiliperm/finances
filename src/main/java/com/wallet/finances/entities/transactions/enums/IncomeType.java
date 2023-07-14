@@ -1,4 +1,4 @@
-package com.wallet.finances.Enum;
+package com.wallet.finances.entities.transactions.enums;
 
 public enum IncomeType {
     MONTHLY(1),
