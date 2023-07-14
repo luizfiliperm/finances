@@ -2,17 +2,12 @@ package com.wallet.finances.entities.wallet;
 
 import java.util.List;
 
+import com.wallet.finances.entities.transactions.Transaction;
 import com.wallet.finances.entities.user.User;
 import com.wallet.finances.entities.transactions.Expense;
 import com.wallet.finances.entities.transactions.Income;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class Wallet {
@@ -25,6 +20,9 @@ public class Wallet {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "wallet", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Transaction> transactions;
 
     public Wallet() {
     }
@@ -43,6 +41,14 @@ public class Wallet {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     
