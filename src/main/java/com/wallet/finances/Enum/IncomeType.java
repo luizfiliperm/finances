@@ -5,4 +5,12 @@ public enum IncomeType {
     SPORADIC(2);
     private int value;
     IncomeType(int value){this.value = value;}
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
 }
