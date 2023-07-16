@@ -3,6 +3,7 @@ package com.wallet.finances.services.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.wallet.finances.entities.wallet.Wallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -61,6 +62,7 @@ public class UserServiceImpl implements UserService{
         UserUtil.validatePassword(user);
 
         user.setPassword(UserUtil.hashPassword(user.getPassword()));
+        user.setWallet(new Wallet());
         userRepository.save(user);
         
         return generateToken(user);
