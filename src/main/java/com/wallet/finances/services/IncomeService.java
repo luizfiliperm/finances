@@ -6,7 +6,7 @@ import com.wallet.finances.entities.transactions.income.Income;
 
 public interface IncomeService {
 
-    Income addIncome(Income income);
+    Income addIncome(Income income, String username);
 
     List<Income> getAll();
 

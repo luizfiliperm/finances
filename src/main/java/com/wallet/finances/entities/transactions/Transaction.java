@@ -65,4 +65,14 @@ public abstract class Transaction {
         public void setDate(LocalDate date) {
                 this.date = date;
         }
+
+        public Wallet getWallet() {
+                return wallet;
+        }
+
+        public void setWallet(Wallet wallet) {
+                this.wallet = wallet;
+        }
+
+        
 }
