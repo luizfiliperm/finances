@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService{
         UserUtil.validatePassword(user);
 
         user.setPassword(UserUtil.hashPassword(user.getPassword()));
-        user.setWallet(new Wallet());
+        user.setWallet(createWallet(user));
         userRepository.save(user);
         
         return generateToken(user);
@@ -95,6 +95,12 @@ public class UserServiceImpl implements UserService{
     private String generateToken(User user){
         String token = tokenService.genToken(user);
         return token;
+    }
+
+    private Wallet createWallet(User user){
+        Wallet wallet = new Wallet();
+        wallet.setUser(user);
+        return wallet;
     }
 
     
