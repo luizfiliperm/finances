@@ -5,7 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class Income extends Transaction {
@@ -15,7 +15,7 @@ public class Income extends Transaction {
     public Income() {
     }
 
-    public Income(Long id, String name, BigDecimal value, Date date, IncomeType incomeType) {
+    public Income(Long id, String name, BigDecimal value, LocalDate date, IncomeType incomeType) {
         super(id, name, value, date);
         this.incomeType = incomeType;
     }

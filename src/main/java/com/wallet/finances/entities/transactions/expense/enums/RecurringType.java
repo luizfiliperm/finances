@@ -1,11 +1,12 @@
-package com.wallet.finances.entities.transactions.enums;
+package com.wallet.finances.entities.transactions.expense.enums;
 
-public enum PaymentMethod {
-    DEBIT(1),
-    CREDIT(2);
+public enum RecurringType {
+    MONTHLY(1),
+    YEARLY(2);
 
     private int value;
-    PaymentMethod(int value){
+
+    RecurringType(int value){
         this.value = value;
     }
 

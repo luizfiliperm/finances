@@ -4,7 +4,7 @@ import com.wallet.finances.entities.wallet.Wallet;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -18,14 +18,14 @@ public abstract class Transaction {
         @Column(name = "value")
         private BigDecimal value;
         @Column(name = "date")
-        private Date date;
+        private LocalDate date;
         @ManyToOne
         @JoinColumn(name = "wallet_id")
         private Wallet wallet;
 
         public Transaction(){}
 
-        public Transaction(Long id, String name, BigDecimal value, Date date) {
+        public Transaction(Long id, String name, BigDecimal value, LocalDate date) {
                 this.id = id;
                 this.name = name;
                 this.value = value;
@@ -56,11 +56,11 @@ public abstract class Transaction {
                 this.value = value;
         }
 
-        public Date getDate() {
+        public LocalDate getDate() {
                 return date;
         }
 
-        public void setDate(Date date) {
+        public void setDate(LocalDate date) {
                 this.date = date;
         }
 }
