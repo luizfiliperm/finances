@@ -1,8 +1,11 @@
 package com.wallet.finances.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +24,19 @@ public class IncomeRestController {
     private IncomeService incomeService;
 
     @PostMapping(path = "/incomes")
-    public Income addIncome(@RequestBody IncomeRequestDTO data, Authentication authentication){
-        Income income = new Income(0L, data.name(), data.value(), data.date(), data.incomeType());
+    public IncomeResponseDTO addIncome(@RequestBody IncomeRequestDTO data, Authentication authentication){
+        Income income = new Income(null, data.name(), data.value(), data.date(), data.incomeType());
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
         incomeService.addIncome(income, userDetails.getUsername());
-        return income;
+
+        return new IncomeResponseDTO(income);
+    }
+
+    @GetMapping(path = "/incomes")
+    public List<IncomeResponseDTO> getAllIncomes(Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return incomeService.getAll(userDetails.getUsername()).stream().map(IncomeResponseDTO::new).toList();
+
     }
 }

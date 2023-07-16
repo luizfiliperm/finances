@@ -31,9 +31,10 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    public List<Income> getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+    public List<Income> getAll(String username) {
+        Wallet wallet = walletRepository.findByUserUsername(username);
+
+        return incomeRepository.getAllByWalletId(wallet.getId());
     }
 
     @Override

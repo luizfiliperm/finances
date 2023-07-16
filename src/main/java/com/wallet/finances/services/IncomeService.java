@@ -8,7 +8,7 @@ public interface IncomeService {
 
     Income addIncome(Income income, String username);
 
-    List<Income> getAll();
+    List<Income> getAll(String username);
 
     void deleteIncomes(List<Long> ids);
 }
