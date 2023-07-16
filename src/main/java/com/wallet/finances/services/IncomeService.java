@@ -1,8 +1,8 @@
 package com.wallet.finances.services;
 
-import com.wallet.finances.entities.transactions.Income;
-
 import java.util.List;
+
+import com.wallet.finances.entities.transactions.income.Income;
 
 public interface IncomeService {
 

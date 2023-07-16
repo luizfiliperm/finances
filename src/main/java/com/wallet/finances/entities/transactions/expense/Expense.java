@@ -3,8 +3,7 @@ package com.wallet.finances.entities.transactions.expense;
 import com.wallet.finances.entities.transactions.Transaction;
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.math.BigDecimal;    
 
 @Entity
 public class Expense extends Transaction {
@@ -16,7 +15,7 @@ public class Expense extends Transaction {
     public Expense() {
     }
 
-    public Expense(Long id, String name, BigDecimal value, LocalDate date) {
+    public Expense(Long id, String name, BigDecimal value, String date) {
         super(id, name, value, date);
     }
 

@@ -18,7 +18,7 @@ import com.wallet.finances.exceptions.user.UserAuthenticationException;
 import com.wallet.finances.exceptions.user.UserNotFoundException;
 import com.wallet.finances.infra.security.TokenService;
 import com.wallet.finances.services.UserService;
-import com.wallet.finances.services.util.UserUtil;
+import com.wallet.finances.util.UserUtil;
 
 @Service
 public class UserServiceImpl implements UserService{

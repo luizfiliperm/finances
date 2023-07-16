@@ -1,4 +1,4 @@
-package com.wallet.finances.services.util;
+package com.wallet.finances.util;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
