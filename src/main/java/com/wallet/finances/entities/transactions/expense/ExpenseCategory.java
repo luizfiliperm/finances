@@ -18,7 +18,7 @@ public class ExpenseCategory implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "expense_category", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = false)
+    @OneToMany(mappedBy = "expenseCategory", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = false)
     private List<Expense> expenses;
 
     public Long getId() {
