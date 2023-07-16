@@ -1,5 +1,6 @@
 package com.wallet.finances.entities.wallet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.wallet.finances.entities.transactions.Transaction;
@@ -23,6 +24,7 @@ public class Wallet {
     private List<Transaction> transactions;
 
     public Wallet() {
+        transactions = new ArrayList<>();
     }
 
     public Long getId() {
@@ -49,5 +51,8 @@ public class Wallet {
         this.transactions = transactions;
     }
 
+    public void addTransaction(Transaction transaction){
+        this.transactions.add(transaction);
+    }
     
 }
