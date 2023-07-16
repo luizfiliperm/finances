@@ -1,7 +1,7 @@
 package com.wallet.finances.services.impl;
 
 import com.wallet.finances.repositories.CategoryRepository;
-import com.wallet.finances.entities.Category;
+import com.wallet.finances.entities.transactions.expense.ExpenseCategory;
 import com.wallet.finances.services.CategoryService;
 import org.springframework.stereotype.Service;
 
@@ -16,21 +16,21 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> findAll() {
+    public List<ExpenseCategory> findAll() {
         return categoryRepository.findAll();
     }
 
     @Override
-    public Category findById(Long id) {
-        Optional<Category> result = categoryRepository.findById(id);
+    public ExpenseCategory findById(Long id) {
+        Optional<ExpenseCategory> result = categoryRepository.findById(id);
         if(!result.isPresent()){
             throw new RuntimeException("Category not found");
         } return result.get();
     }
 
     @Override
-    public Category save(Category category) {
-        return categoryRepository.save(category);
+    public ExpenseCategory save(ExpenseCategory expenseCategory) {
+        return categoryRepository.save(expenseCategory);
     }
 
     @Override

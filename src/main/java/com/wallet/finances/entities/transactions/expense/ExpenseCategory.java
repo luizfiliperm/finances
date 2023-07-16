@@ -1,12 +1,14 @@
-package com.wallet.finances.entities;
+package com.wallet.finances.entities.transactions.expense;
 
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Category implements Serializable {
+@Table(name = "expense_category")
+public class ExpenseCategory implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -15,6 +17,9 @@ public class Category implements Serializable {
     private Long id;
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "expense_category", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = false)
+    private List<Expense> expenses;
 
     public Long getId() {
         return id;
@@ -36,8 +41,8 @@ public class Category implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return Objects.equals(id, category.id) && Objects.equals(name, category.name);
+        ExpenseCategory expenseCategory = (ExpenseCategory) o;
+        return Objects.equals(id, expenseCategory.id) && Objects.equals(name, expenseCategory.name);
     }
 
     @Override

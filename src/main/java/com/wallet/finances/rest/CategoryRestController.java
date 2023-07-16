@@ -1,6 +1,6 @@
 package com.wallet.finances.rest;
 
-import com.wallet.finances.entities.Category;
+import com.wallet.finances.entities.transactions.expense.ExpenseCategory;
 import com.wallet.finances.services.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +14,13 @@ public class CategoryRestController {
         this.categoryService = categoryService;
     }
     @GetMapping("/categories")
-    public List<Category> findAll(){
+    public List<ExpenseCategory> findAll(){
         return categoryService.findAll();
     }
     @PostMapping("/categories")
-    public Category addCategory(@RequestBody Category category){
-        category.setId(0L);
-        return categoryService.save(category);
+    public ExpenseCategory addCategory(@RequestBody ExpenseCategory expenseCategory){
+        expenseCategory.setId(0L);
+        return categoryService.save(expenseCategory);
     }
     @DeleteMapping("/categories/{id}")
     public String deleteCategory(@PathVariable Long id){
@@ -31,11 +31,11 @@ public class CategoryRestController {
         return "Category with id: "+ id +" deleted successfully";
     }
     @GetMapping("/categories/{id}")
-    public Category findById(@PathVariable Long id){
+    public ExpenseCategory findById(@PathVariable Long id){
         return categoryService.findById(id);
     }
     @PutMapping("/categories")
-    public Category updateCategory(@RequestBody Category category){
-        return categoryService.save(category);
+    public ExpenseCategory updateCategory(@RequestBody ExpenseCategory expenseCategory){
+        return categoryService.save(expenseCategory);
     }
 }

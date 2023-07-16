@@ -2,14 +2,14 @@ package com.wallet.finances.services;
 
 import java.util.List;
 
-import com.wallet.finances.entities.Category;
+import com.wallet.finances.entities.transactions.expense.ExpenseCategory;
 
 public interface CategoryService {
-    List<Category> findAll();
+    List<ExpenseCategory> findAll();
     
-    Category findById(Long id);
+    ExpenseCategory findById(Long id);
 
-    Category save(Category category);
+    ExpenseCategory save(ExpenseCategory expenseCategory);
 
     void deleteById(Long id);
 }

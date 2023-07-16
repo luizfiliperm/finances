@@ -1,7 +1,7 @@
 package com.wallet.finances.repositories;
 
-import com.wallet.finances.entities.Category;
+import com.wallet.finances.entities.transactions.expense.ExpenseCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface CategoryRepository extends JpaRepository<ExpenseCategory, Long> {
 }

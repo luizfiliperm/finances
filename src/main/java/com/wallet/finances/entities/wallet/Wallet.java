@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.wallet.finances.entities.transactions.Transaction;
 import com.wallet.finances.entities.user.User;
-import com.wallet.finances.entities.transactions.Expense;
-import com.wallet.finances.entities.transactions.Income;
 
 import jakarta.persistence.*;
 
