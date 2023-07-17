@@ -11,6 +11,8 @@ import com.wallet.finances.repositories.IncomeRepository;
 import com.wallet.finances.repositories.WalletRepository;
 import com.wallet.finances.services.IncomeService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class IncomeServiceImpl implements IncomeService {
 
@@ -38,9 +40,14 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    public void deleteIncomes(List<Long> ids) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteIncomes'");
+    @Transactional
+    public void deleteIncomes(List<Long> ids, String username) {
+        Wallet wallet = walletRepository.findByUserUsername(username);
+
+        ids.forEach(id -> {
+            incomeRepository.deleteByIdAndWalletId(id, wallet.getId());
+        });
+        
     }
     
 }

@@ -10,5 +10,5 @@ public interface IncomeService {
 
     List<Income> getAll(String username);
 
-    void deleteIncomes(List<Long> ids);
+    void deleteIncomes(List<Long> ids, String username);
 }

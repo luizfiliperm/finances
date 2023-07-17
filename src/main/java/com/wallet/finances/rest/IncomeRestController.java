@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +37,18 @@ public class IncomeRestController {
     @GetMapping(path = "/incomes")
     public List<IncomeResponseDTO> getAllIncomes(Authentication authentication){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
         return incomeService.getAll(userDetails.getUsername()).stream().map(IncomeResponseDTO::new).toList();
 
+    }
+
+    @DeleteMapping(path = "/incomes")
+    public String deleteIncomes(@RequestBody List<Long> ids, Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+
+        incomeService.deleteIncomes(ids, userDetails.getUsername());
+
+        return "Incomes deleted successfully";
     }
 }
