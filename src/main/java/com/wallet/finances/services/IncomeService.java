@@ -1,14 +1,14 @@
 package com.wallet.finances.services;
 
-import com.wallet.finances.entities.transactions.Income;
-
 import java.util.List;
+
+import com.wallet.finances.entities.transactions.income.Income;
 
 public interface IncomeService {
 
-    Income addIncome(Income income);
+    Income addIncome(Income income, String username);
 
-    List<Income> getAll();
+    List<Income> getAll(String username);
 
-    void deleteIncomes(List<Long> ids);
+    void deleteIncomes(List<Long> ids, String username);
 }

@@ -1,6 +1,8 @@
 package com.wallet.finances.entities.transactions;
 
 import com.wallet.finances.entities.wallet.Wallet;
+import com.wallet.finances.util.DateTimeUtil;
+
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -25,11 +27,11 @@ public abstract class Transaction {
 
         public Transaction(){}
 
-        public Transaction(Long id, String name, BigDecimal value, LocalDate date) {
+        public Transaction(Long id, String name, BigDecimal value, String date) {
                 this.id = id;
                 this.name = name;
                 this.value = value;
-                this.date = date;
+                this.date = LocalDate.parse(date, DateTimeUtil.FORMATTER);
         }
         //getters and setters
         public Long getId() {
@@ -63,4 +65,14 @@ public abstract class Transaction {
         public void setDate(LocalDate date) {
                 this.date = date;
         }
+
+        public Wallet getWallet() {
+                return wallet;
+        }
+
+        public void setWallet(Wallet wallet) {
+                this.wallet = wallet;
+        }
+
+        
 }

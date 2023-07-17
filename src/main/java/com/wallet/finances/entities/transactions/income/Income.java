@@ -1,11 +1,12 @@
-package com.wallet.finances.entities.transactions;
+package com.wallet.finances.entities.transactions.income;
 
-import com.wallet.finances.entities.transactions.enums.IncomeType;
+import com.wallet.finances.entities.transactions.Transaction;
+import com.wallet.finances.entities.transactions.income.enums.IncomeType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Entity
 public class Income extends Transaction {
@@ -15,7 +16,7 @@ public class Income extends Transaction {
     public Income() {
     }
 
-    public Income(Long id, String name, BigDecimal value, LocalDate date, IncomeType incomeType) {
+    public Income(Long id, String name, BigDecimal value, String date, IncomeType incomeType) {
         super(id, name, value, date);
         this.incomeType = incomeType;
     }

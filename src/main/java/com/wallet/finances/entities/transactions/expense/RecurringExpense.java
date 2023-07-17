@@ -1,7 +1,6 @@
 package com.wallet.finances.entities.transactions.expense;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 import com.wallet.finances.entities.transactions.expense.enums.RecurringType;
 
@@ -27,7 +26,7 @@ public class RecurringExpense extends Expense{
 
     public RecurringExpense(){}
 
-    public RecurringExpense(Long id, String name, BigDecimal value, LocalDate date){
+    public RecurringExpense(Long id, String name, BigDecimal value, String date){
         super(id, name, value, date);
     }
 
