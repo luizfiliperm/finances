@@ -59,8 +59,11 @@ public class Wallet {
 
     public void addTransaction(Transaction transaction){
         this.transactions.add(transaction);
-        calculateTotalIncome();
-        calculateTotalExpense();
+        if(transaction instanceof Income){
+            totalIncome.add(transaction.getValue());
+        }else{
+            totalExpense.add(transaction.getValue());
+        }
     }
 
     public BigDecimal getTotalIncome() {
