@@ -23,12 +23,16 @@ public class IncomeServiceImpl implements IncomeService {
     IncomeRepository incomeRepository;
 
     @Override
+    @Transactional
     public Income addIncome(Income income, String username) {
         Wallet wallet = walletRepository.findByUserUsername(username);
 
         income.setWallet(wallet);
         
-        return incomeRepository.save(income);
+        incomeRepository.save(income);
+        walletRepository.updateTotalIncome(wallet.getId());
+
+        return income;
         
     }
 
@@ -48,6 +52,7 @@ public class IncomeServiceImpl implements IncomeService {
             incomeRepository.deleteByIdAndWalletId(id, wallet.getId());
         });
         
+        walletRepository.updateTotalIncome(wallet.getId());
     }
     
 }
