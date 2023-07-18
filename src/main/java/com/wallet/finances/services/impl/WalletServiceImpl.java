@@ -1,6 +1,5 @@
 package com.wallet.finances.services.impl;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,17 +27,13 @@ public class WalletServiceImpl implements WalletService {
 
         Wallet wallet = walletRepository.findByUserUsername(username);
 
-        LocalDate startLocalDate = LocalDate.parse(startDate, DateTimeUtil.FORMATTER);
+        List<Income> incomes = incomeRepository.findAllByWalletIdAndDateBetween(wallet.getId(),DateTimeUtil.convertStringToLocalDate(startDate), DateTimeUtil.convertStringToLocalDate(endDate));
 
-        LocalDate endLocalDate = LocalDate.parse(startDate, DateTimeUtil.FORMATTER);
+        wallet.setIncomes(incomes);
 
-        // List<Income> incomes = incomeRepository.getAllByDateInterval(startLocalDate, endLocalDate);
-
-        // wallet.setIncomes(incomes);
+        wallet.calculateTotalIncome();
 
         return wallet;
-
-
     }
     
 }

@@ -31,6 +31,9 @@ public class Wallet {
     @Column(name = "total_expense")
     private BigDecimal totalExpense;
 
+    @Transient
+    private List<Income> incomes;
+
     public Wallet() {
         transactions = new ArrayList<>();
         this.totalExpense = BigDecimal.ZERO;
@@ -86,14 +89,20 @@ public class Wallet {
         this.totalExpense = totalExpense;
     }
 
+    public List<Income> getIncomes() {
+        return incomes;
+    }
+
+    public void setIncomes(List<Income> incomes) {
+        this.incomes = incomes;
+    }
+    
+
     public void calculateTotalIncome(){
         BigDecimal totalIncome = BigDecimal.ZERO;
 
-        for(Transaction transaction : transactions){
-            if(transaction instanceof Income){
-                Income income = (Income) transaction;
-                totalIncome = totalIncome.add(income.getValue());
-            }
+        for(Income income : incomes){
+            totalIncome = totalIncome.add(income.getValue());
         }
 
         this.totalIncome = totalIncome;

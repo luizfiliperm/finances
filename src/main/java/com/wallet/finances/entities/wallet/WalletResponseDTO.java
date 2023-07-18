@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.wallet.finances.entities.transactions.income.Income;
 import com.wallet.finances.entities.transactions.income.IncomeResponseDTO;
 
 public record WalletResponseDTO(BigDecimal totalIncome, BigDecimal totalExpense, List<IncomeResponseDTO> incomes) {
@@ -13,8 +12,8 @@ public record WalletResponseDTO(BigDecimal totalIncome, BigDecimal totalExpense,
     }
 
     private static List<IncomeResponseDTO> getIncomeResponseDTOs(Wallet wallet) {
-    return wallet.getTransactions().stream()
-                 .map(income -> new IncomeResponseDTO((Income) income))
+    return wallet.getIncomes().stream()
+                 .map(income -> new IncomeResponseDTO(income))
                  .collect(Collectors.toList());
     }
 }
