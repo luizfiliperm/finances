@@ -40,7 +40,7 @@ public class IncomeServiceImpl implements IncomeService {
     public List<Income> getAll(String username) {
         Wallet wallet = walletRepository.findByUserUsername(username);
 
-        return incomeRepository.getAllByWalletId(wallet.getId());
+        return incomeRepository.findAllByWalletId(wallet.getId());
     }
 
     @Override

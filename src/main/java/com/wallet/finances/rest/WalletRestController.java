@@ -22,12 +22,28 @@ public class WalletRestController {
     
     @GetMapping
     public WalletResponseDTO getWallet(
-        @RequestParam(value = "startDate") String startDate, 
-        @RequestParam(value = "endDate") String endDate, 
+        @RequestParam(value = "startDate", required = false) String startDate, 
+        @RequestParam(value = "endDate", required = false) String endDate, 
         Authentication authentication){
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         
+
+        if(startDate == null && endDate == null){
+            Wallet wallet = walletService.getWalletWithTransactions(userDetails.getUsername());
+            return new WalletResponseDTO(wallet);
+        }
+
+        if(startDate == null){
+            Wallet wallet = walletService.getWalletWithTransactionsBeforeDate(userDetails.getUsername(), endDate);
+            return new WalletResponseDTO(wallet);
+        }
+
+        if(endDate == null){
+            Wallet wallet = walletService.getWalletWithTransactionsAfterDate(userDetails.getUsername(), startDate);
+            return new WalletResponseDTO(wallet);
+        }
+
         Wallet wallet = walletService.getWalletWithTransactionsByDateRange(userDetails.getUsername(), startDate, endDate);
         
         return new WalletResponseDTO(wallet);

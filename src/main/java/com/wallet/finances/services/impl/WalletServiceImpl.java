@@ -35,5 +35,47 @@ public class WalletServiceImpl implements WalletService {
 
         return wallet;
     }
+
+    @Override
+    public Wallet getWalletWithTransactionsBeforeDate(String username, String date) {
+
+        Wallet wallet = walletRepository.findByUserUsername(username);
+
+        List<Income> incomes = incomeRepository.findAllByWalletIdAndDateBefore(wallet.getId(),DateTimeUtil.convertStringToLocalDate(date));
+
+        wallet.setIncomes(incomes);
+
+        wallet.calculateTotalIncome();
+
+        return wallet;
+    }
+
+    @Override
+    public Wallet getWalletWithTransactionsAfterDate(String username, String date) {
+            
+            Wallet wallet = walletRepository.findByUserUsername(username);
+    
+            List<Income> incomes = incomeRepository.findAllByWalletIdAndDateAfter(wallet.getId(),DateTimeUtil.convertStringToLocalDate(date));
+    
+            wallet.setIncomes(incomes);
+    
+            wallet.calculateTotalIncome();
+    
+            return wallet;
+    }
+
+    @Override
+    public Wallet getWalletWithTransactions(String username) {
+
+        Wallet wallet = walletRepository.findByUserUsername(username);
+
+        List<Income> incomes = incomeRepository.findAllByWalletId(wallet.getId());
+
+        wallet.setIncomes(incomes);
+
+        wallet.calculateTotalIncome();
+
+        return wallet;
+    }
     
 }
