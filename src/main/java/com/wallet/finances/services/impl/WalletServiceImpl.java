@@ -23,7 +23,7 @@ public class WalletServiceImpl implements WalletService {
     IncomeRepository incomeRepository;
 
     @Override
-    public Wallet getWalletWithTransactionsByDateRange(String username, String startDate, String endDate) {
+    public Wallet getWalletWithIncomesByDateRange(String username, String startDate, String endDate) {
 
         Wallet wallet = walletRepository.findByUserUsername(username);
 
@@ -37,7 +37,7 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public Wallet getWalletWithTransactionsBeforeDate(String username, String date) {
+    public Wallet getWalletWithIncomesBeforeDate(String username, String date) {
 
         Wallet wallet = walletRepository.findByUserUsername(username);
 
@@ -51,7 +51,7 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public Wallet getWalletWithTransactionsAfterDate(String username, String date) {
+    public Wallet getWalletWithIncomesAfterDate(String username, String date) {
             
             Wallet wallet = walletRepository.findByUserUsername(username);
     
@@ -65,7 +65,7 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public Wallet getWalletWithTransactions(String username) {
+    public Wallet getWalletWithIncomes(String username) {
 
         Wallet wallet = walletRepository.findByUserUsername(username);
 

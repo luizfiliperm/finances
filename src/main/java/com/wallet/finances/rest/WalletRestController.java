@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wallet.finances.entities.wallet.Wallet;
-import com.wallet.finances.entities.wallet.WalletResponseDTO;
+import com.wallet.finances.entities.wallet.WalletWithIncomesResponseDTO;
 import com.wallet.finances.services.WalletService;
 
 @RestController
@@ -21,7 +21,8 @@ public class WalletRestController {
     WalletService walletService;
     
     @GetMapping
-    public WalletResponseDTO getWallet(
+    @RequestMapping("/incomes")
+    public WalletWithIncomesResponseDTO getWalletWithIncomes(
         @RequestParam(value = "startDate", required = false) String startDate, 
         @RequestParam(value = "endDate", required = false) String endDate, 
         Authentication authentication){
@@ -30,22 +31,22 @@ public class WalletRestController {
         
 
         if(startDate == null && endDate == null){
-            Wallet wallet = walletService.getWalletWithTransactions(userDetails.getUsername());
-            return new WalletResponseDTO(wallet);
+            Wallet wallet = walletService.getWalletWithIncomes(userDetails.getUsername());
+            return new WalletWithIncomesResponseDTO(wallet);
         }
 
         if(startDate == null){
-            Wallet wallet = walletService.getWalletWithTransactionsBeforeDate(userDetails.getUsername(), endDate);
-            return new WalletResponseDTO(wallet);
+            Wallet wallet = walletService.getWalletWithIncomesBeforeDate(userDetails.getUsername(), endDate);
+            return new WalletWithIncomesResponseDTO(wallet);
         }
 
         if(endDate == null){
-            Wallet wallet = walletService.getWalletWithTransactionsAfterDate(userDetails.getUsername(), startDate);
-            return new WalletResponseDTO(wallet);
+            Wallet wallet = walletService.getWalletWithIncomesAfterDate(userDetails.getUsername(), startDate);
+            return new WalletWithIncomesResponseDTO(wallet);
         }
 
-        Wallet wallet = walletService.getWalletWithTransactionsByDateRange(userDetails.getUsername(), startDate, endDate);
+        Wallet wallet = walletService.getWalletWithIncomesByDateRange(userDetails.getUsername(), startDate, endDate);
         
-        return new WalletResponseDTO(wallet);
+        return new WalletWithIncomesResponseDTO(wallet);
     }
 }

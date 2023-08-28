@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 
 import com.wallet.finances.entities.transactions.income.IncomeResponseDTO;
 
-public record WalletResponseDTO(BigDecimal totalIncome, BigDecimal totalExpense, List<IncomeResponseDTO> incomes) {
-    public WalletResponseDTO(Wallet wallet){
-        this(wallet.getTotalIncome(), wallet.getTotalExpense(), getIncomeResponseDTOs(wallet));
+public record WalletWithIncomesResponseDTO(BigDecimal totalIncome, List<IncomeResponseDTO> incomes) {
+    public WalletWithIncomesResponseDTO(Wallet wallet){
+        this(wallet.getTotalIncome(), getIncomeResponseDTOs(wallet));
     }
 
     private static List<IncomeResponseDTO> getIncomeResponseDTOs(Wallet wallet) {
