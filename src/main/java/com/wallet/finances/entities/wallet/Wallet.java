@@ -25,12 +25,19 @@ public class Wallet {
     @OneToMany(mappedBy = "wallet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transaction> transactions;
 
+    @Column(name = "total_income")
     private BigDecimal totalIncome;
 
+    @Column(name = "total_expense")
     private BigDecimal totalExpense;
+
+    @Transient
+    private List<Income> incomes;
 
     public Wallet() {
         transactions = new ArrayList<>();
+        this.totalExpense = BigDecimal.ZERO;
+        this.totalIncome = BigDecimal.ZERO;
     }
 
     public Long getId() {
@@ -82,14 +89,20 @@ public class Wallet {
         this.totalExpense = totalExpense;
     }
 
+    public List<Income> getIncomes() {
+        return incomes;
+    }
+
+    public void setIncomes(List<Income> incomes) {
+        this.incomes = incomes;
+    }
+    
+
     public void calculateTotalIncome(){
         BigDecimal totalIncome = BigDecimal.ZERO;
 
-        for(Transaction transaction : transactions){
-            if(transaction instanceof Income){
-                Income income = (Income) transaction;
-                totalIncome = totalIncome.add(income.getValue());
-            }
+        for(Income income : incomes){
+            totalIncome = totalIncome.add(income.getValue());
         }
 
         this.totalIncome = totalIncome;
